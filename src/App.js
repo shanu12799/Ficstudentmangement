@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import React,{useState,useEffect} from 'react';
 import './App.css';
-
+import Login from "./Component/Login"
+import Dashboard from "./Component/Dashboard"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+// import {hashHistory} from "react-router";
 function App() {
+  const [id,setid]=useState('')
+
+  useEffect(() => {
+    const studid=localStorage.getItem('Id');
+    if(studid)
+    {
+      setid(studid)
+    }
+  }, [id])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!id?(
+        <Login setid={setid}/>
+      ):(
+        <Dashboard id={id} setid={setid}/>
+      )}
+      
+      
     </div>
   );
 }
